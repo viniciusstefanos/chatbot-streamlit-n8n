@@ -1,0 +1,30 @@
+version: '3'
+services:
+  streamlit-app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - N8N_WEBHOOK_URL=https://webhook.saltear.com.br/webhook/chatbot
+      - BEARER_TOKEN=8fbcffcd3a1c6f5941a6e7d0a8efbd30f96d4e83b4c2ef9b8f6e2d23e25e6f91
+    networks:
+      - SaltearAuto
+
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.streamlit.rule=Host(`assistente.saltear.com.br`)
+        - traefik.http.routers.streamlit.entrypoints=websecure
+        - traefik.http.routers.streamlit.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.streamlit.service=streamlit
+        - traefik.http.services.streamlit.loadbalancer.server.port=8501
+
+networks:
+  SaltearAuto:
+    external: true
+    name: SaltearAuto

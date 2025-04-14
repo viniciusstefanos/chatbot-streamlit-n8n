@@ -1,0 +1,25 @@
+# Ignora a venv
+venv/
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Arquivos de log
+*.log
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos do VSCode
+.vscode/
+
+# Arquivos do Streamlit
+.streamlit/config.toml
+.streamlit/secrets.toml
